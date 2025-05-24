@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import  Optional, List
-from contextlib import asynccontextmanager
+
 
 # Modelo de datos
 class Perro(BaseModel):
@@ -25,16 +25,6 @@ templates = Jinja2Templates(directory="templates")
 perros_db: List[Perro] = []
 next_id = 1
 
-# Función para inicializar datos
-def inicializar_datos():
-    global next_id
-    perros_iniciales = [
-        Perro(id=1, nombre="Max", raza="Golden Retriever"),
-        Perro(id=2, nombre="Luna", raza="Border Collie"),
-        Perro(id=3, nombre="Rocky", raza="Pastor Alemán")
-    ]
-    perros_db.extend(perros_iniciales)
-    next_id = 4
 
 # Funciones auxiliares
 def obtener_perro_por_id(perro_id: int) -> Optional[Perro]:
@@ -112,9 +102,4 @@ async def eliminar_perro(perro_id: int):
     return RedirectResponse(url="/", status_code=303)
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Cargar datos iniciales al iniciar la aplicación
-    # y liberar recursos al cerrar
-    inicializar_datos()
-    yield
+
