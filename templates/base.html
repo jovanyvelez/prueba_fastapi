@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD de Perros</title>
+    <title>{% block title %}CRUD de Perros{% endblock %}</title>
     <style>
         * {
             margin: 0;
@@ -109,6 +110,32 @@
             transition: all 0.2s ease;
         }
         
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.2);
+        }
+        
         .empty-message {
             text-align: center;
             padding: 40px;
@@ -121,57 +148,33 @@
             text-align: center;
         }
         
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 12px;
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🐕 Gestión de Perros</h1>
+            <h1>🐕 {% block header %}Gestión de Perros{% endblock %}</h1>
             <p>Sistema de administración canina</p>
         </div>
         
         <div class="content">
-            <div class="actions">
-                <a href="/crear" class="btn btn-success">➕ Agregar Nuevo Perro</a>
-            </div>
-            
-            {% if perros %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Raza</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for perro in perros %}
-                        <tr>
-                            <td>{{ perro.id }}</td>
-                            <td>{{ perro.nombre }}</td>
-                            <td>{{ perro.raza }}</td>
-                            <td>
-                                <a href="/editar/{{ perro.id }}" class="btn btn-warning btn-sm">✏️ Editar</a>
-                                <form style="display: inline;" method="post" action="/eliminar/{{ perro.id }}" 
-                                      onsubmit="return confirm('¿Estás seguro de que quieres eliminar a {{ perro.nombre }}?')">
-                                    <button type="submit" class="btn btn-danger btn-sm">🗑️ Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <div class="empty-message">
-                    <h3>No hay perros registrados</h3>
-                    <p>¡Agrega el primer perro para comenzar!</p>
-                </div>
-            {% endif %}
+            {% block content %}{% endblock %}
         </div>
     </div>
 </body>
