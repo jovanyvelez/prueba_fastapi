@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from pydantic import BaseModel
-from typing import  Optional, List
 
 
 # Modelo de datos
@@ -19,12 +18,12 @@ app = FastAPI(title="CRUD de Perros")
 templates = Jinja2Templates(directory="templates")
 
 # Lista en memoria para almacenar los perros
-perros_db: List[Perro] = []
+perros_db: list[Perro] = []
 next_id = 1
 
 
 # Funciones auxiliares
-def obtener_perro_por_id(perro_id: int) -> Optional[Perro]:
+def obtener_perro_por_id(perro_id: int) -> Perro | None:
     for perro in perros_db:
         if perro.id == perro_id:
             return perro
